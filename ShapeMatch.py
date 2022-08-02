@@ -38,12 +38,19 @@ area2 = cv2.contourArea(cnt2)
 peri1 = cv2.arcLength(cnt1, True)
 peri2 = cv2.arcLength(cnt2, True)
 
+# comparing with matchShapes function
+matShape = cv2.matchShapes(imgCanny1, imgCanny2, 1, 0.0)
+matShape_float = "{:.2f}".format(matShape*100)
+
 # printing values
 print("Area Of Shape 1 : ", area1)
 print("Area Of Shape 2 : ", area2)
 print("\n")
 print("Perimeter Of Shape 1 : ", peri1)
 print("Perimeter Of Shape 2 : ", peri2)
+print("\n")
+print("Match Shape Result : ", matShape)
+print("Match Shape Result : ", matShape_float, "%")
 
 # cv2.imshow("Image 1", img1)
 # cv2.imshow("Image 2", img2)
