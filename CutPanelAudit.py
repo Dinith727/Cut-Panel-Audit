@@ -3,7 +3,7 @@ import cv2
 from StackImage import stackImages
 
 # declaring the paths
-path1 = 'Src/1.2.jpg'
+path1 = 'Resources/55.jpg'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -11,16 +11,16 @@ img1 = cv2.imread(path1)
 # copying the images to draw contours
 imgContour1 = img1.copy()
 
-# converting to gray
-imgGray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-
-ret, thresh1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
-
 # adding a blur
-imgBlur1 = cv2.GaussianBlur(thresh1, (7, 7), 1)
+imgBlur1 = cv2.GaussianBlur(img1, (3, 3), 1)
+
+# converting to gray
+imgGray1 = cv2.cvtColor(imgBlur1, cv2.COLOR_BGR2GRAY)
+
+ret, thresh1 = cv2.threshold(imgGray1, 100, 225, cv2.THRESH_BINARY_INV)
 
 # canny edge detection
-imgCanny1 = cv2.Canny(imgBlur1, 0, 0)
+imgCanny1 = cv2.Canny(thresh1, 0, 220)
 
 # finding contours
 contours1, hierarchy = cv2.findContours(imgCanny1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
