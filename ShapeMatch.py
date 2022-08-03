@@ -1,4 +1,5 @@
 import cv2
+from StackImage import stackImages
 
 # declaring the paths
 path1 = 'Src/11.jpg'
@@ -42,29 +43,33 @@ peri2 = cv2.arcLength(cnt2, True)
 matShape = cv2.matchShapes(imgCanny1, imgCanny2, 1, 0.0)
 matShape_float = "{:.2f}".format(matShape*100)
 
+# getting the absolute value of the area difference
+areaDiff = abs(area2-area1)
+
+# getting the absolute value of the perimeter difference
+periDiff = abs(peri2-peri1)
+
 # printing values
 print("Area Of Shape 1 : ", area1)
 print("Area Of Shape 2 : ", area2)
+print("Difference Of Area : ", areaDiff)
 print("\n")
 print("Perimeter Of Shape 1 : ", peri1)
 print("Perimeter Of Shape 2 : ", peri2)
+print("Difference Of Perimeter: ", periDiff)
 print("\n")
 print("Match Shape Result : ", matShape)
 print("Match Shape Result : ", matShape_float, "%")
-
-# cv2.imshow("Image 1", img1)
-# cv2.imshow("Image 2", img2)
 
 # drawing contours
 cv2.drawContours(imgContour1, cnt1, -1, (255, 0, 0), 3)
 cv2.drawContours(imgContour2, cnt2, -1, (255, 0, 0), 3)
 
-# displaying images
-cv2.imshow("Image 1", imgContour1)
-cv2.imshow("Image 2", imgContour2)
+# declaring an array and calling the stackImage Function in StackImage.py
+imgStack = stackImages(0.8, ([img1, imgContour1, imgCanny1], [img2, imgContour2, imgCanny2]))
 
-cv2.imshow("Image Canny 1", imgCanny1)
-cv2.imshow("Image Canny 2", imgCanny2)
+# displaying the stack
+cv2.imshow("Stack", imgStack)
 
 # added a wait key
 cv2.waitKey(0)
