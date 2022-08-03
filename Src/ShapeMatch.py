@@ -2,8 +2,8 @@ import cv2
 from StackImage import stackImages
 
 # declaring the paths
-path1 = 'Resources/11.jpg'
-path2 = 'Resources/22.jpg'
+path1 = '../Resources/11.jpg'
+path2 = '../Resources/22.jpg'
 
 # reading the images
 img1 = cv2.imread(path1)
