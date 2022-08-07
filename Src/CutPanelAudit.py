@@ -1,10 +1,11 @@
 import numpy as np
 import cv2
 from StackImage import stackImages
+from ShapeComparison import comparison
 
 # declaring the paths
 path1 = '../Cut Panels/1.png'
-path2 = '../Cut Panels/1.4.png'
+path2 = '../Cut Panels/2.png'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -28,9 +29,11 @@ ret, thresh2 = cv2.threshold(imgGray2, 100, 225, cv2.THRESH_BINARY_INV)
 # canny edge detection
 imgCanny1 = cv2.Canny(thresh1, 50, 50)
 imgCanny2 = cv2.Canny(thresh2, 50, 50)
-kernel = np.ones((5,5),np.uint8)
-dilation1 = cv2.dilate(imgCanny1,kernel,iterations = 3)
-dilation2 = cv2.dilate(imgCanny2,kernel,iterations = 3)
+
+# dilating the edges
+kernel = np.ones((5, 5), np.uint8)
+dilation1 = cv2.dilate(imgCanny1, kernel, iterations=3)
+dilation2 = cv2.dilate(imgCanny2, kernel, iterations=3)
 
 # finding contours
 contours1, hierarchy = cv2.findContours(dilation1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -42,28 +45,46 @@ cnt2 = contours2[0]
 area1 = cv2.contourArea(cnt1)
 area2 = cv2.contourArea(cnt2)
 
+# rounding area values to 2 decimal points
+area1_float = "{:.2f}".format(area1)
+area2_float = "{:.2f}".format(area2)
+
 # calculating perimeter
 peri1 = cv2.arcLength(cnt1, True)
 peri2 = cv2.arcLength(cnt2, True)
 
-areaDiff = abs(area2-area1)
-periDiff = abs(peri2-peri1)
-# printing values
-print("Area Of Shape 1 : ", area1)
-print("Area Of Shape 2 : ", area2)
-print("Difference Of Area : ", areaDiff)
-print("\n")
-print("Perimeter Of Shape 1 : ", peri1)
-print("Perimeter Of Shape 2 : ", peri2)
-print("Difference Of Perimeter: ", periDiff)
-print("\n")
+# rounding perimeter values to 2 decimal points
+peri1_float = "{:.2f}".format(peri1)
+peri2_float = "{:.2f}".format(peri2)
+
+# calculating the absolute value of the area difference
+areaDiff = area1 - area2
+areaDiff_float = "{:.2f}".format(areaDiff)
+
+# calculating the absolute value of the perimeter difference
+periDiff = peri1 - peri2
+periDiff_float = "{:.2f}".format(periDiff)
 
 # drawing contours
 cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 20)
 cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 20)
 
+# calling the comparison function from ShapeComparison.py
+status = comparison(areaDiff, periDiff)
+
+# printing values
+print("Area Of Panel 1 : ", area1_float)
+print("Area Of Panel 2 : ", area2_float)
+print("Difference Of Area : ", areaDiff_float)
+print("\n")
+print("Perimeter Of Panel 1 : ", peri1_float)
+print("Perimeter Of Panel 2 : ", peri2_float)
+print("Difference Of Perimeter : ", periDiff_float)
+print("\n")
+print("Status : ", status)
+
 # declaring an array and calling the stackImage Function in StackImage.py
-imgStack = stackImages(0.1, ([img1, dilation1,imgContour1], [img2, dilation2,imgContour2]))
+imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))
 
 # displaying the stack
 cv2.imshow("Stack", imgStack)
