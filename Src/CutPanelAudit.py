@@ -66,8 +66,8 @@ periDiff = peri1 - peri2
 periDiff_float = "{:.2f}".format(periDiff)
 
 # drawing contours
-cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 20)
-cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 20)
+cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 30)
+cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 30)
 
 # calling the comparison function from ShapeComparison.py
 status = comparison(areaDiff, periDiff)
