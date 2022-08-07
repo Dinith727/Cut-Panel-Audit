@@ -2,8 +2,8 @@ import cv2
 from StackImage import stackImages
 
 # declaring the paths
-path1 = '../Resources/11.jpg'
-path2 = '../Resources/22.jpg'
+path1 = '../Cut Panels/blue.png'
+path2 = '../Cut Panels/2.4.png'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -18,12 +18,12 @@ imgGray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 imgGray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 # adding a blur
-imgBlur1 = cv2.GaussianBlur(imgGray1, (7, 7), 1)
-imgBlur2 = cv2.GaussianBlur(imgGray2, (7, 7), 1)
+imgBlur1 = cv2.GaussianBlur(imgGray1, (3, 3), 0)
+imgBlur2 = cv2.GaussianBlur(imgGray2, (3, 3), 0)
 
 # canny edge detection
-imgCanny1 = cv2.Canny(imgBlur1, 50, 50)
-imgCanny2 = cv2.Canny(imgBlur2, 50, 50)
+imgCanny1 = cv2.Canny(imgBlur1, 10, 200)
+imgCanny2 = cv2.Canny(imgBlur2, 10, 200)
 
 # finding contours
 contours1, hierarchy = cv2.findContours(imgCanny1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -62,11 +62,11 @@ print("Match Shape Result : ", matShape)
 print("Match Shape Result : ", matShape_float, "%")
 
 # drawing contours
-cv2.drawContours(imgContour1, cnt1, -1, (255, 0, 0), 3)
-cv2.drawContours(imgContour2, cnt2, -1, (255, 0, 0), 3)
+cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 3)
+cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 3)
 
 # declaring an array and calling the stackImage Function in StackImage.py
-imgStack = stackImages(0.8, ([img1, imgContour1, imgCanny1], [img2, imgContour2, imgCanny2]))
+imgStack = stackImages(0.15, ([img1, imgContour1, imgCanny1], [img2, imgContour2, imgCanny2]))
 
 # displaying the stack
 cv2.imshow("Stack", imgStack)

@@ -7,38 +7,38 @@ def empty(a):
     pass
 
 
-path = '../Resources/55.jpg'
+path = '../Cut Panels/1.png'
 cv2.namedWindow("TrackBars")
 cv2.resizeWindow("TrackBars", 640, 340)
-cv2.createTrackbar("Hue Min", "TrackBars", 0, 179, empty)
-cv2.createTrackbar("Hue Max", "TrackBars", 179, 179, empty)
-cv2.createTrackbar("Sat Min", "TrackBars", 0, 255, empty)
-cv2.createTrackbar("Sat Max", "TrackBars", 225, 255, empty)
-cv2.createTrackbar("Val Min", "TrackBars", 0, 255, empty)
-cv2.createTrackbar("Val Max", "TrackBars", 255, 255, empty)
+cv2.createTrackbar("Blur 1", "TrackBars", 0, 10, empty)
+cv2.createTrackbar("Blur 2", "TrackBars", 0, 10, empty)
+cv2.createTrackbar("Thresh 1", "TrackBars", 0, 10, empty)
+cv2.createTrackbar("Thresh 2", "TrackBars", 0, 10, empty)
 cv2.createTrackbar("Canny 1", "TrackBars", 0, 255, empty)
-cv2.createTrackbar("Canny 2", "TrackBars", 255, 255, empty)
-
+cv2.createTrackbar("Canny 2", "TrackBars",225, 255, empty)
 
 while True:
     img = cv2.imread(path)
-    imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-    h_min = cv2.getTrackbarPos("Hue Min", "TrackBars")
-    h_max = cv2.getTrackbarPos("Hue Max", "TrackBars")
-    s_min = cv2.getTrackbarPos("Sat Min", "TrackBars")
-    s_max = cv2.getTrackbarPos("Sat Max", "TrackBars")
-    v_min = cv2.getTrackbarPos("Val Min", "TrackBars")
-    v_max = cv2.getTrackbarPos("Val Max", "TrackBars")
-    c_min = cv2.getTrackbarPos("Canny 1", "TrackBars")
-    c_max = cv2.getTrackbarPos("Canny 2", "TrackBars")
-    print(h_min,h_max,s_min,s_max,v_min,v_max, c_min, c_max)
+    imgContour1 = img.copy()
 
-    lower = np.array([h_min,s_min,v_min])
-    upper = np.array([h_max,s_max,v_max])
-    mask = cv2.inRange(imgHSV,lower,upper)
-    imgResult = cv2.bitwise_and(img,img,mask=mask)
-    imgCanny1 = cv2.Canny(mask, c_min, c_max)
-    imgStack = stackImages(0.2,([img, imgHSV, imgCanny1],[mask, imgResult, imgCanny1]))
+    b1 = cv2.getTrackbarPos("Blur 1", "TrackBars")
+    b2 = cv2.getTrackbarPos("Blur 2", "TrackBars")
+    t1 = cv2.getTrackbarPos("Thresh 1", "TrackBars")
+    t2 = cv2.getTrackbarPos("Thresh 2", "TrackBars")
+    c1 = cv2.getTrackbarPos("Canny 1", "TrackBars")
+    c2 = cv2.getTrackbarPos("Canny 2", "TrackBars")
+
+    print(b1, b2, t1, t2, c1, c2)
+
+    imgGray1 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imgBlur1 = cv2.GaussianBlur(imgGray1, (b1, b2), 1)
+    ret, thresh1 = cv2.threshold(imgGray1, t1, t2, cv2.THRESH_BINARY_INV)
+    imgCanny1 = cv2.Canny(thresh1, c1, c2)
+    contours1, hierarchy = cv2.findContours(imgCanny1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    cnt1 = contours1[0]
+    cv2.drawContours(imgContour1, cnt1, -1, (255, 0, 0), 3)
+
+    imgStack = stackImages(0.15, ([img, imgGray1, thresh1, imgCanny1, imgContour1]))
     cv2.imshow("Stacked Images", imgStack)
 
     cv2.waitKey(1)
