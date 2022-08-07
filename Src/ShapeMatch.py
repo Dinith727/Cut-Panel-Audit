@@ -22,8 +22,8 @@ imgBlur1 = cv2.GaussianBlur(imgGray1, (3, 3), 0)
 imgBlur2 = cv2.GaussianBlur(imgGray2, (3, 3), 0)
 
 # canny edge detection
-imgCanny1 = cv2.Canny(imgBlur1, 10, 200)
-imgCanny2 = cv2.Canny(imgBlur2, 10, 200)
+imgCanny1 = cv2.Canny(imgBlur1, 200, 300)
+imgCanny2 = cv2.Canny(imgBlur2, 200, 300)
 
 # finding contours
 contours1, hierarchy = cv2.findContours(imgCanny1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -62,8 +62,8 @@ print("Match Shape Result : ", matShape)
 print("Match Shape Result : ", matShape_float, "%")
 
 # drawing contours
-cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 3)
-cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 3)
+cv2.drawContours(imgContour1, cnt1, -1, (0, 0, 225), 20)
+cv2.drawContours(imgContour2, cnt2, -1, (0, 0, 225), 3)
 
 # declaring an array and calling the stackImage Function in StackImage.py
 imgStack = stackImages(0.15, ([img1, imgContour1, imgCanny1], [img2, imgContour2, imgCanny2]))
