@@ -65,23 +65,40 @@ areaDiff_float = "{:.2f}".format(areaDiff)
 periDiff = peri1 - peri2
 periDiff_float = "{:.2f}".format(periDiff)
 
+# calculating the deviation ratio of area
+adevratio = abs(areaDiff/area1)*100
+adevratio_float = "{:.2f}".format(adevratio)
+
+# calculating the deviation ratio of perimeter
+pdevratio = abs(periDiff/peri1)*100
+pdevratio_float = "{:.2f}".format(pdevratio)
+
 # drawing contours
 cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 30)
 cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 30)
 
+# calling the shapeMatch function
+shaperesult = (1-(cv2.matchShapes(cnt1, cnt2, 1, 0.0)))*100
+shaperesult_float = "{:.2f}".format(shaperesult)
+
 # calling the comparison function from ShapeComparison.py
-status = comparison(areaDiff, periDiff)
+shrinkage, result, shape = comparison(areaDiff, periDiff, shaperesult)
 
 # printing values
-print("Area Of Panel 1 : ", area1_float)
-print("Area Of Panel 2 : ", area2_float)
+print("Area Of The Original Panel : ", area1_float)
+print("Area Of Tested Panel : ", area2_float)
 print("Difference Of Area : ", areaDiff_float)
+print("Deviation Ratio Of Area : ", adevratio_float, "%")
 print("\n")
-print("Perimeter Of Panel 1 : ", peri1_float)
-print("Perimeter Of Panel 2 : ", peri2_float)
+print("Perimeter Of The Original Panel : ", peri1_float)
+print("Perimeter Of Tested Panel : ", peri2_float)
 print("Difference Of Perimeter : ", periDiff_float)
+print("Deviation Ratio Of Perimeter : ", pdevratio_float, "%")
 print("\n")
-print("Status : ", status)
+print("Panel is ", shaperesult_float, "% matching with the original panel")
+print("Shape : ", shape)
+print("Shrinkage : ", shrinkage)
+print("Result : ", result)
 
 # declaring an array and calling the stackImage Function in StackImage.py
 imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))
