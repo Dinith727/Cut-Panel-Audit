@@ -6,7 +6,7 @@ from SQL import record_data
 
 # declaring the paths
 path1 = '../Cut Panels/2.png'
-path2 = '../Cut Panels/2blue.png'
+path2 = '../Cut Panels/2.png'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -76,7 +76,6 @@ pdevratio_float = "{:.2f}".format(pdevratio)
 
 # drawing contours
 cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 30)
-cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 30)
 
 # calling the shapeMatch function
 shaperesult = (1-(cv2.matchShapes(cnt1, cnt2, 1, 0.0)))*100
@@ -84,6 +83,13 @@ shaperesult_float = "{:.2f}".format(shaperesult)
 
 # calling the comparison function from ShapeComparison.py
 shrinkage, result, shape = comparison(areaDiff, periDiff, shaperesult)
+
+# drawing contours of the tested panel according to the result
+if result == 'Passed':
+    cv2.drawContours(imgContour2, cnt2, -1, (0, 225, 0), 30)
+else:
+    cv2.drawContours(imgContour2, cnt2, -1, (0, 0, 225), 30)
+
 
 # printing values
 print("Area Of The Original Panel : ", area1_float)
