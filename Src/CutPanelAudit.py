@@ -6,7 +6,7 @@ from SQL import record_data
 
 # declaring the paths
 path1 = '../Cut Panels/2.png'
-path2 = '../Cut Panels/2.png'
+path2 = '../Cut Panels/2blue.png'
 
 # reading the images
 img1 = cv2.imread(path1)
