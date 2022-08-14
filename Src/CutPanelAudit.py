@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 from StackImage import stackImages
 from ShapeComparison import comparison
+from SQL import record_data
 
 # declaring the paths
 path1 = '../Cut Panels/1.png'
@@ -99,6 +100,7 @@ print("Panel is ", shaperesult_float, "% matching with the original panel")
 print("Shape : ", shape)
 print("Shrinkage : ", shrinkage)
 print("Result : ", result)
+record_data(adevratio_float, pdevratio_float)
 
 # declaring an array and calling the stackImage Function in StackImage.py
 imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))
