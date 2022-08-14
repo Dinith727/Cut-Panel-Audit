@@ -5,8 +5,8 @@ from ShapeComparison import comparison
 from SQL import record_data
 
 # declaring the paths
-path1 = '../Cut Panels/1.png'
-path2 = '../Cut Panels/2.png'
+path1 = '../Cut Panels/2.png'
+path2 = '../Cut Panels/2blue.png'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -100,7 +100,9 @@ print("Panel is ", shaperesult_float, "% matching with the original panel")
 print("Shape : ", shape)
 print("Shrinkage : ", shrinkage)
 print("Result : ", result)
-record_data(adevratio_float, pdevratio_float)
+
+# writing data to the database by calling the record_data function
+record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result)
 
 # declaring an array and calling the stackImage Function in StackImage.py
 imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))
