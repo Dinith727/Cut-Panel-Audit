@@ -67,11 +67,11 @@ periDiff = peri1 - peri2
 periDiff_float = "{:.2f}".format(periDiff)
 
 # calculating the deviation ratio of area
-adevratio = abs(areaDiff/area1)*100
+adevratio = (areaDiff/area1)*100
 adevratio_float = "{:.2f}".format(adevratio)
 
 # calculating the deviation ratio of perimeter
-pdevratio = abs(periDiff/peri1)*100
+pdevratio = (periDiff/peri1)*100
 pdevratio_float = "{:.2f}".format(pdevratio)
 
 # drawing contours
