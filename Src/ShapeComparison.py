@@ -1,23 +1,30 @@
-def comparison(areadifference, perimeterdiffernce, shaperesult):
-    shrinkage = "No Shrinkage"
-    shape = "Matched"
+def comparison(adevratio, pdevratio, shaperesult):
+
     shape_match_limit = 97
-    max_area_diff = 500
-    max_peri_diff = 50
-    min_area_diff = -500
-    min_peri_diff = -50
+    max_adevratio = 2
+    max_pdevratio = 2
+    min_adevratio = -2
+    min_pdevratio = -2
 
     if shaperesult > shape_match_limit:
-        result = "Passed"
+        shape = "Matched"
+        if adevratio > max_adevratio and pdevratio > max_pdevratio:
+            shrinkage = 'Panel Shrunk'
+            result = "Failed"
+        elif adevratio < min_adevratio and pdevratio < min_pdevratio:
+            shrinkage = 'Panel has expanded'
+            result = "Failed"
+        else:
+            result = "Passed"
+            shrinkage = "No Shrinkage"
     else:
         result = "Failed"
         shape = "Mis Matched"
-    if areadifference > max_area_diff:
-        if perimeterdiffernce > max_peri_diff:
+        if adevratio > max_adevratio and pdevratio > max_pdevratio:
             shrinkage = 'Panel Shrunk'
-            result = "Failed"
-    elif areadifference < min_area_diff:
-        if perimeterdiffernce < min_peri_diff:
-            shrinkage = 'Panel has expanded'
-            result = "Failed"
+        elif adevratio < min_adevratio and pdevratio < min_pdevratio:
+            shrinkage = 'Panel expanded'
+        else:
+            shrinkage = "No Shrinkage"
+
     return shrinkage, result, shape

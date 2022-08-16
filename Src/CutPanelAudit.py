@@ -82,7 +82,7 @@ shaperesult = (1-(cv2.matchShapes(cnt1, cnt2, 1, 0.0)))*100
 shaperesult_float = "{:.2f}".format(shaperesult)
 
 # calling the comparison function from ShapeComparison.py
-shrinkage, result, shape = comparison(areaDiff, periDiff, shaperesult)
+shrinkage, result, shape = comparison(adevratio, pdevratio, shaperesult)
 
 # drawing contours of the tested panel according to the result
 if result == 'Passed':
