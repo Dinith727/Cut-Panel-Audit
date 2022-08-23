@@ -5,8 +5,8 @@ from ShapeComparison import comparison
 from SQL import record_data
 
 # declaring the paths
-path1 = '../Cut Panels/1.png'
-path2 = '../Cut Panels/2.png'
+path1 = '../Cut Panels/11.png'
+path2 = '../Cut Panels/12.png'
 
 # reading the images
 img1 = cv2.imread(path1)
@@ -82,7 +82,7 @@ shaperesult = (1-(cv2.matchShapes(cnt1, cnt2, 1, 0.0)))*100
 shaperesult_float = "{:.2f}".format(shaperesult)
 
 # calling the comparison function from ShapeComparison.py
-shrinkage, result, shape = comparison(adevratio, pdevratio, shaperesult)
+shrinkage, result, shape, shape_match_limit = comparison(adevratio, pdevratio, shaperesult, area1)
 
 # drawing contours of the tested panel according to the result
 if result == 'Passed':
@@ -103,6 +103,7 @@ print("Difference Of Perimeter : ", periDiff_float)
 print("Deviation Ratio Of Perimeter : ", pdevratio_float, "%")
 print("\n")
 print("Panel is ", shaperesult_float, "% matching with the original panel")
+print("Match Shape Pass Limit : ", shape_match_limit, "%")
 print("Shape : ", shape)
 print("Shrinkage : ", shrinkage)
 print("Result : ", result)
