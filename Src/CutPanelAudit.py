@@ -75,7 +75,7 @@ pdevratio = (periDiff/peri1)*100
 pdevratio_float = "{:.2f}".format(pdevratio)
 
 # drawing contours
-cv2.drawContours(imgContour1, cnt1, -1, (0, 225, 0), 30)
+cv2.drawContours(imgContour1, cnt1, -1, (225, 0, 0), 30)
 
 # calling the shapeMatch function
 shaperesult = (1-(cv2.matchShapes(cnt1, cnt2, 1, 0.0)))*100
