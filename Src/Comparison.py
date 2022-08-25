@@ -4,7 +4,7 @@ from StackImage import stackImages
 from ShapeComparison import comparison
 from SQL import record_data
 
-def compare_panels(original, testing):
+def compare_panels(original, testing, sales_order_number, docket_number, cut_number, size, style, panel_number, location):
 
     # declaring the paths
     path1 = original
@@ -93,28 +93,10 @@ def compare_panels(original, testing):
     else:
         cv2.drawContours(imgContour2, cnt2, -1, (0, 0, 225), 30)
 
-
-    # printing values
-    print("Area Of The Original Panel : ", area1_float)
-    print("Area Of Tested Panel : ", area2_float)
-    print("Difference Of Area : ", areaDiff_float)
-    print("Deviation Ratio Of Area : ", adevratio_float, "%")
-    print("\n")
-    print("Perimeter Of The Original Panel : ", peri1_float)
-    print("Perimeter Of Tested Panel : ", peri2_float)
-    print("Difference Of Perimeter : ", periDiff_float)
-    print("Deviation Ratio Of Perimeter : ", pdevratio_float, "%")
-    print("\n")
-    print("Panel is ", shaperesult_float, "% matching with the original panel")
-    print("Match Shape Pass Limit : ", shape_match_limit, "%")
-    print("Shape : ", shape)
-    print("Shrinkage : ", shrinkage)
-    print("Result : ", result)
-
-    return area1_float, area2_float, areaDiff_float, adevratio_float, peri1_float, peri2_float, periDiff_float, pdevratio_float, shaperesult_float, shape_match_limit, shape, shrinkage, result
-
     # writing data to the database by calling the record_data function
-    record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result)
+    status = record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result, sales_order_number, docket_number, cut_number, size, style, panel_number, location)
+
+    return area1_float, area2_float, areaDiff_float, adevratio_float, peri1_float, peri2_float, periDiff_float, pdevratio_float, shaperesult_float, shape_match_limit, shape, shrinkage, result, status
 
     # declaring an array and calling the stackImage Function in StackImage.py
     # imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))

@@ -50,22 +50,22 @@ tk.Label(master, text="Difference :", bg=mainbgcol, font='Helvetica 10').place(x
 tk.Label(master, text="Deviation Ratio :", bg=mainbgcol, font='Helvetica 10').place(x=395, y=620)
 
 # input fields
-sales_order_number = tk.Entry(master)
-docket_number = tk.Entry(master)
-cut_number = tk.Entry(master)
-size = tk.Entry(master)
-style = tk.Entry(master)
-panel_number = tk.Entry(master)
-location = tk.Entry(master)
+e1 = tk.Entry(master)
+e2 = tk.Entry(master)
+e3 = tk.Entry(master)
+e4 = tk.Entry(master)
+e5 = tk.Entry(master)
+e6 = tk.Entry(master)
+e7 = tk.Entry(master)
 
 # input fields positions
-sales_order_number.place(x=300, y=205)
-docket_number.place(x=300, y=235)
-cut_number.place(x=300, y=265)
-size.place(x=300, y=295)
-style.place(x=300, y=325)
-panel_number.place(x=300, y=355)
-location.place(x=300, y=385)
+e1.place(x=300, y=205)
+e2.place(x=300, y=235)
+e3.place(x=300, y=265)
+e4.place(x=300, y=295)
+e5.place(x=300, y=325)
+e6.place(x=300, y=355)
+e7.place(x=300, y=385)
 
 # defining open image function for the original panel
 def openOriginalImage():
@@ -100,15 +100,27 @@ def compare():
     space1 = '         '
     space2 = '           '
 
-    area1_float, area2_float, areaDiff_float, adevratio_float, peri1_float, peri2_float, periDiff_float, pdevratio_float, shaperesult_float, shape_match_limit, shape, shrinkage, result = compare_panels(ho, ht)
+    sales_order_number = e1.get()
+    docket_number = e2.get()
+    cut_number = e3.get()
+    size = e4.get()
+    style = e5.get()
+    panel_number = e6.get()
+    location = e7.get()
+
+    area1_float, area2_float, areaDiff_float, adevratio_float, peri1_float, peri2_float, periDiff_float, pdevratio_float, shaperesult_float, shape_match_limit, shape, shrinkage, result, status = compare_panels(ho, ht, sales_order_number, docket_number, cut_number, size, style, panel_number, location)
     tk.Label(master, text=area1_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=500, y=560)
     tk.Label(master, text=area2_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=500, y=580)
     tk.Label(master, text=areaDiff_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=500, y=600)
     tk.Label(master, text=adevratio_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=500, y=620)
+
     tk.Label(master, text=peri1_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=200, y=560)
     tk.Label(master, text=peri2_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=200, y=580)
     tk.Label(master, text=periDiff_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=200, y=600)
     tk.Label(master, text=pdevratio_float+space1, bg=mainbgcol, font='Helvetica 10').place(x=200, y=620)
+
+    tk.Label(master, text=status, bg=mainbgcol, font='Helvetica 10', fg='blue').place(x=125, y=650)
+
     if shrinkage == 'Panel has expanded':
         tk.Label(master, text=shrinkage, bg=mainbgcol, font='Helvetica 11').place(x=240, y=475)
     else:
@@ -123,7 +135,6 @@ def compare():
         rescolour = 'Red'
 
     tk.Label(master, text=result+space1, bg=mainbgcol, font='Helvetica 11 bold', fg=rescolour).place(x=470, y=477)
-
 
 # defining buttons to insert original panel, testing panel and comparison
 original = tk.Button(master, text ="Select Original Panel", command = openOriginalImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0)
