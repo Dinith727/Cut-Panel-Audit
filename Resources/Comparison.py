@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from StackImage import stackImages
 from ShapeComparison import comparison
 from SQL import record_data
 
@@ -96,3 +97,12 @@ def compare_panels(original, testing, sales_order_number, docket_number, cut_num
     status = record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result, sales_order_number, docket_number, cut_number, size, style, panel_number, location)
 
     return area1_float, area2_float, areaDiff_float, adevratio_float, peri1_float, peri2_float, periDiff_float, pdevratio_float, shaperesult_float, shape_match_limit, shape, shrinkage, result, status
+
+    # declaring an array and calling the stackImage Function in StackImage.py
+    # imgStack = stackImages(0.1, ([img1, dilation1, imgContour1], [img2, dilation2, imgContour2]))
+
+    # displaying the stack
+    # cv2.imshow("Stack", imgStack)
+
+    # added a wait key
+    # cv2.waitKey(0)
