@@ -89,7 +89,7 @@ for arrays in allarray:
         #print(T4)
         INTsubArray.append(T4)
     INTALLarray.append(INTsubArray)
-img = np.zeros((6000,30000,3), np.uint8)
+img = np.zeros((6000,25000,3), np.uint8)
 #print(INTALLarray)
 
 points=np.array(INTALLarray[2])
@@ -98,7 +98,6 @@ cv2.drawContours(img, pts, -1, (0, 225, 0), 10)
 half = cv2.resize(img, (0, 0), fx = 0.1, fy = 0.1)
 
 for var in INTALLarray:
-    #print("New Shape")
     points=np.array(var)
     pts=np.array([points])
 
