@@ -107,6 +107,7 @@ print("Match Shape Pass Limit : ", shape_match_limit, "%")
 print("Shape : ", shape)
 print("Shrinkage : ", shrinkage)
 print("Result : ", result)
+print(cnt2)
 
 # writing data to the database by calling the record_data function
 record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result)

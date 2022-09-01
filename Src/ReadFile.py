@@ -1,13 +1,15 @@
 import sys
+import cv2
 import json
-# team = {}
-# team['gbrurl']="gbr/one.GBR"
-# with open('parameters.json', 'w') as f:
-#     json.dump(team, f)
+import numpy as np
+team = {}
+team['gbrurl']="../GBR/one.GBR"
+with open('parameters.json', 'w') as f:
+    json.dump(team, f)
 
 f = open('parameters.json')
 openparams = json.load(f)
-print("Parameters from File",openparams['gbrurl'])
+# print("Parameters from File",openparams['gbrurl'])
 
 
 f = open(openparams['gbrurl'], "r",encoding='unicode_escape') #reads the GBR file from the directory
@@ -84,7 +86,25 @@ for arrays in allarray:
         cordinates = withoutX.split('Y')
         # print(cordinates)
         T4 = [int(x) for x in cordinates]
-        # print(T4)
+        #print(T4)
         INTsubArray.append(T4)
     INTALLarray.append(INTsubArray)
+img = np.zeros((6000,30000,3), np.uint8)
+#print(INTALLarray)
 
+points=np.array(INTALLarray[2])
+pts=np.array([points])
+cv2.drawContours(img, pts, -1, (0, 225, 0), 10)
+half = cv2.resize(img, (0, 0), fx = 0.1, fy = 0.1)
+
+for var in INTALLarray:
+    #print("New Shape")
+    points=np.array(var)
+    pts=np.array([points])
+
+    img1 = cv2.line(img,(0,0),(511,511),(255,0,0),5)
+    cv2.drawContours(img, pts, -1, (0, 225, 0), 13)
+half1 = cv2.resize(img1, (0, 0), fx=0.1, fy=0.1)
+cv2.imshow("Stacked Images", half1)
+
+cv2.waitKey(0)
