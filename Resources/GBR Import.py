@@ -3,7 +3,7 @@ import cv2
 import json
 import numpy as np
 team = {}
-team['gbrurl']="../GBR/one.GBR"
+team['gbrurl']="../GBR/CZ9857-BULK-A-42-V2.GBR"
 with open('parameters.json', 'w') as f:
     json.dump(team, f)
 
@@ -11,11 +11,10 @@ f = open('parameters.json')
 openparams = json.load(f)
 # print("Parameters from File",openparams['gbrurl'])
 
+f = open(openparams['gbrurl'], "r", encoding='unicode_escape') #reads the GBR file from the directory
+alldata = f.read() #assign to all data variable
 
-f = open(openparams['gbrurl'], "r",encoding='unicode_escape') #reads the GBR file from the directory
-alldata = f.read()#assign to all data variable
-
-arrayall = alldata.split('*')#Splits the All Data bt * and stores in a array
+arrayall = alldata.split('*') #Splits the All Data bt * and stores in a array
 # print(arrayall)
 
 linearray=[]
@@ -106,23 +105,23 @@ for var in INTALLarray:
     M = cv2.moments(pts)
     cX = int(M["m10"] / M["m00"])
     cY = int(M["m01"] / M["m00"])
-    cv2.drawContours(img, pts, -1, (0, 225, 0), 13)
+    cv2.drawContours(img, pts, -1, (255, 225, 255), 13)
     cv2.putText(img, point, (cX, cY),
-                cv2.FONT_HERSHEY_SIMPLEX, 8, (255, 255, 255), 9)
+                cv2.FONT_HERSHEY_SIMPLEX, 6, (0, 0, 255), 9)
     count += 1
 half1 = cv2.resize(img1, (0, 0), fx=0.1, fy=0.1)
 cv2.imshow("Stacked Images", half1)
 
 cv2.waitKey(0)
 
-value = input("Please enter a the Shape:\n")
+value = input("Please enter a Shape:\n")
 value = int(value)
 points=np.array(INTALLarray[value])
 pts=np.array([points])
 cv2.drawContours(imgc, pts, -1, (0, 225, 0), 10)
 halfc = cv2.resize(imgc, (0, 0), fx = 0.1, fy = 0.1)
 
-halfc = cv2.resize(imgc, (0, 0), fx=0.1, fy=0.1)
+
 cv2.imshow("Stacked Images", halfc)
 
 cv2.waitKey(0)

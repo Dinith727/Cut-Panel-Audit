@@ -2,7 +2,7 @@ import pypyodbc
 from datetime import date
 
 date = date.today()
-today = date.strftime("%d/%m/%Y")
+today = date.strftime("%y/%m/%d")
 
 conn = pypyodbc.connect('Driver={SQL Server};'
                       'Server=DESKTOP-DQ67SQN\SQLEXPRESS;'
@@ -12,11 +12,11 @@ conn = pypyodbc.connect('Driver={SQL Server};'
 
 def record_data(adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result, sales_order_number, docket_number, cut_number, size, style, panel_number, location):
 
-    query = "Insert Into CutPanelAudit Values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    query = "Insert Into CutPanelAuditDB Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
     cursor = conn.cursor()
 
     # Execute the sql query
-    cursor.execute(query, [today, cut_number, panel_number, sales_order_number, docket_number, size, style, adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result])
+    cursor.execute(query, [today, cut_number, panel_number, sales_order_number, docket_number, size, style, adevratio_float, pdevratio_float, shaperesult_float, shape, shrinkage, result,"kj"])
 
     # Commit the data
     conn.commit()

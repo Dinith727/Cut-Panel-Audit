@@ -1,4 +1,4 @@
-f = open("gbr/one.GBR", "r", encoding='unicode_escape')  # reads the GBR file from the directory
+f = open("../GBR/one.GBR", "r", encoding='unicode_escape')  # reads the GBR file from the directory
 alldata = f.read()  # assign to all data variable
 # print(alldata)
 arrayall = alldata.split('*')  # Splits the All Data bt * and stores in a array
@@ -27,7 +27,7 @@ for items in NewlineArray:
         # print(items)
 
     if LItem:
-        print("Started L Detecetd")
+        #print("Started L Detecetd")
         stringmake=stringmake+"/"+items
 
 
