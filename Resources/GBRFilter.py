@@ -34,9 +34,10 @@ LItem =False
 ArrayPostions=[]
 stringmake=""
 
+
 # Get the Length and the Width of the Marker
 def getGBRdata():
-    arrayReturn=[]
+    arrayReturn = []
     LengthWidth=arrayall[5]
     LandWArray=LengthWidth.split('/')
 
@@ -57,10 +58,10 @@ def getGBRdata():
 for items in NewlineArray:
     if items.startswith('L'):
         LItem = True
-        stringmake =stringmake[1:]
+        stringmake = stringmake[1:]
         ArrayPostions.append(stringmake);
         # print(stringmake)
-        stringmake=""
+        stringmake = ""
     if LItem:
         stringmake=stringmake+"/"+items
 
