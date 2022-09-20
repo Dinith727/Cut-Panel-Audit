@@ -104,8 +104,12 @@ count = 0
 for var in INTALLarray:
     points=np.array(var)
     pts=np.array([points])
-    point = ArrayPostions[count]
-    print(count, "  -  ", ArrayPostions[count+1])
+    point = ArrayPostions[count+14]
+    splitted = point.split(",")
+    size = splitted[13].split("/")
+
+    #print(count, "  -  ", splitted[7],splitted[11],size[0],splitted[17])
+    print(count, "  -  ", splitted)
     pointC = str(count)
     img1 = cv2.line(img,(0,0),(511,511),(255,0,0),5)
     M = cv2.moments(pts)
@@ -126,7 +130,7 @@ i = 0
 j = 0
 for x in ArrayPostions:
     if (value in x):
-        j = i - 1
+        j = i - 14
         print(j)
     i += 1
 
