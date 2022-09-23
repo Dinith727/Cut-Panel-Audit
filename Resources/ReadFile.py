@@ -38,7 +38,6 @@ def getGBRdata():
 
     arrayReturn.append(round(float(MarkerLength)*25.4,0))
 
-
     MarkerWidth=MarkerWidth[:-2]
     MarkerWidth=MarkerWidth[2:]
 

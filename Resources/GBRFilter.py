@@ -59,7 +59,7 @@ for items in NewlineArray:
     if items.startswith('L'):
         LItem = True
         stringmake = stringmake[1:]
-        ArrayPostions.append(stringmake);
+        ArrayPostions.append(stringmake)
         # print(stringmake)
         stringmake = ""
     if LItem:
