@@ -1,8 +1,12 @@
 import os
 import tkinter as tk
+
+import cv2
+import numpy as np
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from LabelReturn import getLable
+from Filter import filter
 
 SizeArray = []
 
@@ -66,6 +70,7 @@ def openOriginalImage():
     currdir = os.getcwd()
     tempdir = filedialog.askopenfile(parent=master, initialdir='../GBR', title='Please select a directory')
     filepath = os.path.abspath(tempdir.name)
+    global hy
     hy = str(filepath.replace("\\", '/' ))
     SizeArray, PnameArray, StyleArray, ModelArray = getLable(hy);
 
@@ -79,29 +84,49 @@ def openOriginalImage():
     [styleDuplicateRemoved.append(x) for x in StyleArray if x not in styleDuplicateRemoved]
     [modelDuplicateRemoved.append(x) for x in ModelArray if x not in modelDuplicateRemoved]
 
-    variablepname = tk.StringVar(master)
-    variablesize = tk.StringVar(master)
-    variablestyle = tk.StringVar(master)
-    variablemodel = tk.StringVar(master)
-    variablelocation = tk.StringVar(master)
 
-    pname = tk.OptionMenu(master, variablepname, "Select Piece Name", *pnameDuplicateRemoved)
+    def callbacklocation(selection):
+        global locationval
+        locationval = selection
+
+    def callbacksize(selection):
+        global sizeval
+        sizeval = selection
+
+    def callbackpname(selection):
+        global pnameval
+        pnameval = selection
+
+    def callbackstyle(selection):
+        global styleval
+        styleval = selection
+
+    def callbackmodel(selection):
+        global modelval
+        modelval = selection
+
+    variablepname = tk.StringVar(master)
+    pname = tk.OptionMenu(master, variablepname, *pnameDuplicateRemoved, command=callbackpname)
     pname.place(x=300, y=205)
     pname.config(width=20)
 
-    size = tk.OptionMenu(master, variablesize, "Select Size", *sizeDuplicateRemoved)
+    variablesize = tk.StringVar(master)
+    size = tk.OptionMenu(master, variablesize, *sizeDuplicateRemoved, command=callbacksize)
     size.place(x=300, y=245)
     size.config(width=20)
 
-    style = tk.OptionMenu(master, variablestyle, "Select Style", *styleDuplicateRemoved)
+    variablestyle = tk.StringVar(master)
+    style = tk.OptionMenu(master, variablestyle, *styleDuplicateRemoved, command=callbackstyle)
     style.place(x=300, y=285)
     style.config(width=20)
 
-    model = tk.OptionMenu(master, variablemodel, "Select Model", *modelDuplicateRemoved)
+    variablemodel = tk.StringVar(master)
+    model = tk.OptionMenu(master, variablemodel, *modelDuplicateRemoved, command=callbackmodel)
     model.place(x=300, y=325)
     model.config(width=20)
 
-    location = tk.OptionMenu(master, variablelocation, "Select Model", "A", "B", "C", "D", "E",)
+    variablelocation = tk.StringVar(master)
+    location = tk.OptionMenu(master, variablelocation, "A", "B", "C", "D", "E", command=callbacklocation)
     location.place(x=300, y=365)
     location.config(width=20)
 
@@ -109,7 +134,7 @@ def openOriginalImage():
 def openTestingImage():
     currdir = os.getcwd()
     tempdir = filedialog.askopenfile(parent=master, initialdir='../Cut Panels', title='Please select a directory')
-    filepath = os.path.abspath(tempdir.name)
+    filepath = os.path.abspath(tempdir)
     hy = str(filepath.replace("\\", '/' ))
     image = Image.open(hy)
     resize_image = image.resize((250, 300))
@@ -118,10 +143,27 @@ def openTestingImage():
     label1.image = img
     label1.place(x=1000, y=200)
 
+def viewPanel():
+    imgpts = filter(hy, sizeval, pnameval, styleval, modelval)
+    if imgpts is None:
+        tk.Label(master, text="---- No Match Found ----", bg=mainbgcol, fg='red', font='Helvetica 8 bold').place(x=298, y=395)
+    else:
+        tk.Label(master, text="----  Match Found   ----", bg=mainbgcol, fg='green', font='Helvetica 8 bold').place(x=310, y=395)
+        imgp = np.zeros((6000, 25000, 3), np.uint8)
+        cv2.drawContours(imgp, imgpts, -1, (0, 225, 0), 10)
+        halfc = cv2.resize(imgp, (0, 0), fx=0.1, fy=0.1)
+
+        cv2.imshow("Stacked Images", halfc)
+
+        cv2.waitKey(0)
+
+
 
 # defining buttons to insert original panel, testing panel and comparison
 original = tk.Button(master, text ="Select Original Panel", command = openOriginalImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0)
 original.place(x=670, y=530)
+show = tk.Button(master, text ="View Panel", command = viewPanel, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0)
+show.place(x=670, y=580)
 testing = tk.Button(master, text ="Select Testing Panel", command = openTestingImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0)
 testing.place(x=1070, y=530)
 compare = tk.Button(master, text ="Compare Panels", command = openTestingImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0, width=15)
