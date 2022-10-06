@@ -106,10 +106,15 @@ for var in INTALLarray:
     pts=np.array([points])
     point = ArrayPostions[count+14]
     splitted = point.split(",")
-    size = splitted[13].split("/")
 
-    #print(count, "  -  ", splitted[7],splitted[11],size[0],splitted[17])
-    print(count, "  -  ", splitted)
+    size = splitted[13].split("/")
+    pname = splitted[7].split("/")
+    style = splitted[11].split("/")
+    model = splitted[17].split("/")
+
+    #print(count, "  -  ", pname[0],style[0],size[0],model[0])
+    print("No : ",count,", piece Name : ", pname[0],", style : ", style[0],", size : ", size[0],", model : ", model[0])
+    #print(count, "  -  ", splitted)
     pointC = str(count)
     img1 = cv2.line(img,(0,0),(511,511),(255,0,0),5)
     M = cv2.moments(pts)
@@ -124,14 +129,26 @@ cv2.imshow("Stacked Images", half1)
 
 cv2.waitKey(0)
 
-value = input("Please enter a Shape:\n")
+sizein = input("Please enter the size:\n")
+pnamein = input("Please enter the piece name :\n")
+stylein = input("Please enter the style:\n")
+modelin = input("Please enter the model:\n")
 
 i = 0
 j = 0
 for x in ArrayPostions:
-    if (value in x):
-        j = i - 14
-        print(j)
+    splitted = x.split(",")
+
+    if i > 14:
+
+        size = splitted[13].split("/")
+        pname = splitted[7].split("/")
+        style = splitted[11].split("/")
+        model = splitted[17].split("/")
+        print(size[0])
+        if (sizein in size[0] and pnamein in pname[0] and stylein in style[0] and modelin in model[0]):
+            j = i - 14
+            break;
     i += 1
 
 points = np.array(INTALLarray[j])

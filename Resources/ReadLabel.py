@@ -20,18 +20,20 @@ for items in NewlineArray:
         LItem = True
         stringmake =stringmake[1:]
         ArrayPostions.append(stringmake);
-        # print(stringmake)
+        #print(stringmake)
         stringmake=""
     if LItem:
         stringmake=stringmake+"/"+items
 
-
-word = '171/A,0,0,1,1/P,0,1,0,0'
-i = 0
 for x in ArrayPostions:
-    if (word in x):
-        # print(x)
-        print(i)
-    i += 1
+    print(x);
+
+# word = '171/A,0,0,1,1/P,0,1,0,0'
+# i = 0
+# for x in ArrayPostions:
+#     if (word in x):
+#         # print(x)
+#         print(i)
+#     i += 1
 
 
