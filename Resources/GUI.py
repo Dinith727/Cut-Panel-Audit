@@ -77,6 +77,8 @@ def openOriginalImage():
     pnameDuplicateRemoved = []
     sizeDuplicateRemoved = []
     styleDuplicateRemoved = []
+
+    global modelDuplicateRemoved
     modelDuplicateRemoved = []
 
     [pnameDuplicateRemoved.append(x) for x in PnameArray if x not in pnameDuplicateRemoved]
@@ -101,9 +103,9 @@ def openOriginalImage():
         global styleval
         styleval = selection
 
-    def callbackmodel(selection):
-        global modelval
-        modelval = selection
+    # def callbackmodel(selection):
+    #     global modelval
+    #     modelval = selection
 
     variablepname = tk.StringVar(master)
     pname = tk.OptionMenu(master, variablepname, *pnameDuplicateRemoved, command=callbackpname)
@@ -120,10 +122,12 @@ def openOriginalImage():
     style.place(x=300, y=285)
     style.config(width=20)
 
-    variablemodel = tk.StringVar(master)
-    model = tk.OptionMenu(master, variablemodel, *modelDuplicateRemoved, command=callbackmodel)
-    model.place(x=300, y=325)
-    model.config(width=20)
+    # variablemodel = tk.StringVar(master)
+    # model = tk.OptionMenu(master, variablemodel, *modelDuplicateRemoved, command=callbackmodel)
+    # model.place(x=300, y=325)
+    # model.config(width=20)
+
+    tk.Label(master, text=modelDuplicateRemoved[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=325)
 
     variablelocation = tk.StringVar(master)
     location = tk.OptionMenu(master, variablelocation, "A", "B", "C", "D", "E", command=callbacklocation)
@@ -144,7 +148,7 @@ def openTestingImage():
     label1.place(x=1000, y=200)
 
 def viewPanel():
-    imgpts = filter(hy, sizeval, pnameval, styleval, modelval)
+    imgpts = filter(hy, sizeval, pnameval, modelDuplicateRemoved[0])
     if imgpts is None:
         tk.Label(master, text="---- No Match Found ----", bg=mainbgcol, fg='red', font='Helvetica 8 bold').place(x=298, y=395)
     else:

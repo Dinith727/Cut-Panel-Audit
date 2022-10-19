@@ -35,7 +35,7 @@ def getLable(filepath):
 
             size = splitted[13].split("/")
             pname = splitted[7].split("/")
-            style = splitted[11].split("/")
+            style = splitted[15].split("/")
             model = splitted[17].split("/")
 
             SizeArray.append(size[0]);

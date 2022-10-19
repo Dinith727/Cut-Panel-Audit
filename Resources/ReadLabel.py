@@ -20,7 +20,7 @@ for items in NewlineArray:
         LItem = True
         stringmake =stringmake[1:]
         ArrayPostions.append(stringmake);
-        #print(stringmake)
+        print(stringmake)
         stringmake=""
     if LItem:
         stringmake=stringmake+"/"+items

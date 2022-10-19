@@ -1,7 +1,7 @@
 import cv2
 import json
 import numpy as np
-def filter(file,sizein, pnamein, stylein, modelin ):
+def filter(file,sizein, pnamein, modelin ):
     team = {}
     team['gbrurl']= file
     with open('parameters.json', 'w') as f:
@@ -103,9 +103,9 @@ def filter(file,sizein, pnamein, stylein, modelin ):
         if i > 14:
             size = splitted[13].split("/")
             pname = splitted[7].split("/")
-            style = splitted[11].split("/")
+
             model = splitted[17].split("/")
-            if ((sizein in size[0]) and (pnamein in pname[0]) and (stylein in style[0]) and (modelin in model[0])):
+            if ((sizein in size[0]) and (pnamein in pname[0]) and (modelin in model[0])):
                 j = i - 14
                 break;
         i += 1

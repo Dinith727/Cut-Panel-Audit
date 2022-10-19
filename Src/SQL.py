@@ -5,7 +5,7 @@ date = date.today()
 today = date.strftime("%y/%m/%d")
 
 conn = pypyodbc.connect('Driver={SQL Server};'
-                      'Server=DESKTOP-DQ67SQN\SQLEXPRESS;'
+                      'Server=DESKTOP-ETPEQC8\SQLEXPRESS;'
                       'Database=CutPanelAudit;'
                       'Trusted_Connection=yes;')
 
