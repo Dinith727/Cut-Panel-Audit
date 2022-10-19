@@ -30,7 +30,7 @@ tk.Label(master, text="Cut Panel Audit", font='Helvetica 28 bold', bg=mainbgcol,
 tk.Label(master, text="-------- Panel Details --------", bg=mainbgcol, font='Helvetica 12 bold').place(x=200, y=150)
 tk.Label(master, text="Piece Name : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=185, y=205)
 tk.Label(master, text="Size : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=242, y=245)
-tk.Label(master, text="Style : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=237, y=285)
+tk.Label(master, text="Set : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=249, y=285)
 tk.Label(master, text="Model : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=229, y=325)
 tk.Label(master, text="Location : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=208, y=365)
 tk.Label(master, text="Shape Similarity : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=101, y=455)
