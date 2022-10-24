@@ -6,7 +6,7 @@ import numpy as np
 from PIL import ImageTk, Image
 from tkinter import filedialog
 from LabelReturn import getLable
-from Filter import filter
+from Filter import filter, filterByName
 
 SizeArray = []
 
@@ -27,12 +27,14 @@ master.geometry("%dx%d" % (width, height))
 tk.Label(master, text="Cut Panel Audit", font='Helvetica 28 bold', bg=mainbgcol, fg=buttonbgcol).place(x=550, y=50)
 
 # labels of input fields
-tk.Label(master, text="-------- Panel Details --------", bg=mainbgcol, font='Helvetica 12 bold').place(x=200, y=150)
-tk.Label(master, text="Piece Name : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=185, y=205)
-tk.Label(master, text="Size : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=242, y=245)
-tk.Label(master, text="Set : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=249, y=285)
-tk.Label(master, text="Model : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=229, y=325)
-tk.Label(master, text="Location : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=208, y=365)
+tk.Label(master, text="-------- Panel Details --------", bg=mainbgcol, font='Helvetica 12 bold').place(x=200, y=110)
+tk.Label(master, text="Piece Name : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=185, y=165)
+tk.Label(master, text="Piece Size : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=196, y=205)
+tk.Label(master, text="Piece Description : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=140, y=245)
+tk.Label(master, text="Piece Category : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=157, y=285)
+tk.Label(master, text="Bundle ID : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=197, y=325)
+tk.Label(master, text="Model Name : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=177, y=365)
+tk.Label(master, text="Left/Right : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=197, y=405)
 tk.Label(master, text="Shape Similarity : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=101, y=455)
 tk.Label(master, text="Shrinkage Status : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=93, y=475)
 tk.Label(master, text="Shape Status : ", bg=mainbgcol, font='Helvetica 12 bold').place(x=122, y=495)
@@ -65,6 +67,7 @@ tk.Label(master, text="Testing Panel", bg=mainbgcol, font='Helvetica 10').place(
 tk.Label(master, text="Testing Panel", bg=mainbgcol, font='Helvetica 10').place(x=500, y=620)
 
 
+
 # defining open image function for the original panel
 def openOriginalImage():
     currdir = os.getcwd()
@@ -95,6 +98,8 @@ def openOriginalImage():
         global sizeval
         sizeval = selection
 
+
+
     def callbackpname(selection):
         global pnameval
         pnameval = selection
@@ -109,30 +114,30 @@ def openOriginalImage():
 
     variablepname = tk.StringVar(master)
     pname = tk.OptionMenu(master, variablepname, *pnameDuplicateRemoved, command=callbackpname)
-    pname.place(x=300, y=205)
+    pname.place(x=300, y=164)
     pname.config(width=20)
 
     variablesize = tk.StringVar(master)
     size = tk.OptionMenu(master, variablesize, *sizeDuplicateRemoved, command=callbacksize)
-    size.place(x=300, y=245)
+    size.place(x=300, y=205)
     size.config(width=20)
 
-    variablestyle = tk.StringVar(master)
-    style = tk.OptionMenu(master, variablestyle, *styleDuplicateRemoved, command=callbackstyle)
-    style.place(x=300, y=285)
-    style.config(width=20)
+    # variablestyle = tk.StringVar(master)
+    # style = tk.OptionMenu(master, variablestyle, *styleDuplicateRemoved, command=callbackstyle)
+    # style.place(x=300, y=285)
+    # style.config(width=20)
 
     # variablemodel = tk.StringVar(master)
     # model = tk.OptionMenu(master, variablemodel, *modelDuplicateRemoved, command=callbackmodel)
     # model.place(x=300, y=325)
     # model.config(width=20)
 
-    tk.Label(master, text=modelDuplicateRemoved[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=325)
+    # tk.Label(master, text=modelDuplicateRemoved[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=325)
 
-    variablelocation = tk.StringVar(master)
-    location = tk.OptionMenu(master, variablelocation, "A", "B", "C", "D", "E", command=callbacklocation)
-    location.place(x=300, y=365)
-    location.config(width=20)
+    # variablelocation = tk.StringVar(master)
+    # location = tk.OptionMenu(master, variablelocation, "A", "B", "C", "D", "E", command=callbacklocation)
+    # location.place(x=300, y=365)
+    # location.config(width=20)
 
 # defining open image function for the testing panel
 def openTestingImage():
@@ -161,6 +166,18 @@ def viewPanel():
 
         cv2.waitKey(0)
 
+def filt():
+    label = filterByName(hy, sizeval, pnameval, modelDuplicateRemoved[0])
+    splitted = label.split(",")
+    piece_discription = splitted[9].split("/")
+    piece_Category = splitted[11].split("/")
+    bundle_ID = splitted[15].split("/")
+    model_Name = splitted[17].split("/")
+    tk.Label(master, text=piece_discription[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=247)
+    tk.Label(master, text=piece_Category[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=287)
+    tk.Label(master, text=bundle_ID[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=327)
+    tk.Label(master, text=model_Name[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=367)
+    tk.Label(master, text=splitted[19], bg=mainbgcol, font='Helvetica 10').place(x=300, y=407)
 
 
 # defining buttons to insert original panel, testing panel and comparison
@@ -170,8 +187,10 @@ show = tk.Button(master, text ="View Panel", command = viewPanel, bg='#d9165a', 
 show.place(x=670, y=580)
 testing = tk.Button(master, text ="Select Testing Panel", command = openTestingImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0)
 testing.place(x=1070, y=530)
-compare = tk.Button(master, text ="Compare Panels", command = openTestingImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0, width=15)
-compare.place(x=300, y=420)
+# compare = tk.Button(master, text ="Compare Panels", command = openTestingImage, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0, width=15)
+# compare.place(x=400, y=420)
+Filter = tk.Button(master, text ="Import", command = filt, bg='#d9165a', fg='white', font='Helvetica 10 bold', borderwidth=0, width=15)
+Filter.place(x=400, y=420)
 
 # initial image for original panel
 image = Image.open('../Resources/insert_image.jpg')

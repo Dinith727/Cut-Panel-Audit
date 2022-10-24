@@ -25,8 +25,10 @@ for items in NewlineArray:
     if LItem:
         stringmake=stringmake+"/"+items
 
-for x in ArrayPostions:
-    print(x);
+# print(ArrayPostions[7])
+
+# for x in ArrayPostions:
+#     print(x);
 
 # word = '171/A,0,0,1,1/P,0,1,0,0'
 # i = 0
