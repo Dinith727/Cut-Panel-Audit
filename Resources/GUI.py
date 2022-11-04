@@ -89,28 +89,13 @@ def openOriginalImage():
     [styleDuplicateRemoved.append(x) for x in StyleArray if x not in styleDuplicateRemoved]
     [modelDuplicateRemoved.append(x) for x in ModelArray if x not in modelDuplicateRemoved]
 
-
-    def callbacklocation(selection):
-        global locationval
-        locationval = selection
-
     def callbacksize(selection):
         global sizeval
         sizeval = selection
 
-
-
     def callbackpname(selection):
         global pnameval
         pnameval = selection
-
-    def callbackstyle(selection):
-        global styleval
-        styleval = selection
-
-    # def callbackmodel(selection):
-    #     global modelval
-    #     modelval = selection
 
     variablepname = tk.StringVar(master)
     pname = tk.OptionMenu(master, variablepname, *pnameDuplicateRemoved, command=callbackpname)
@@ -121,23 +106,6 @@ def openOriginalImage():
     size = tk.OptionMenu(master, variablesize, *sizeDuplicateRemoved, command=callbacksize)
     size.place(x=300, y=205)
     size.config(width=20)
-
-    # variablestyle = tk.StringVar(master)
-    # style = tk.OptionMenu(master, variablestyle, *styleDuplicateRemoved, command=callbackstyle)
-    # style.place(x=300, y=285)
-    # style.config(width=20)
-
-    # variablemodel = tk.StringVar(master)
-    # model = tk.OptionMenu(master, variablemodel, *modelDuplicateRemoved, command=callbackmodel)
-    # model.place(x=300, y=325)
-    # model.config(width=20)
-
-    # tk.Label(master, text=modelDuplicateRemoved[0], bg=mainbgcol, font='Helvetica 10').place(x=300, y=325)
-
-    # variablelocation = tk.StringVar(master)
-    # location = tk.OptionMenu(master, variablelocation, "A", "B", "C", "D", "E", command=callbacklocation)
-    # location.place(x=300, y=365)
-    # location.config(width=20)
 
 # defining open image function for the testing panel
 def openTestingImage():
